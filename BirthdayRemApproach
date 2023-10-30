@@ -1,0 +1,31 @@
+Creating Birthday Reminder Spring boot application and Deploying it with Docker involves several steps are-
+
+Step 1: Creating a Birthday Reminder Spring Boot Application
+
+1. Setting up the application environment -> Ensuring that Java,Maven and an Integrated Development Environment (IDE) installed.
+2. Creating a New Spring Boot Project -> Use Spring Boot Initializer and adding all the
+    requirement dependencies (Spring Web,Spring Data JPA,MYSQL,Thymeleaf)
+3. Developing API's Some EndPoints are ->
+        a) To Add a Friend's Birthday -  /addBirthday
+        b) To Retrieve a Friend's Birthday - /getAllBirthdays
+        c) To Delete a Friend's Birthday -  /deleteBirthday
+4. MYSQL Database is use for storing data.
+5. Thymeleaf is use for developing frontend.
+
+Step 2 : Shell Script file for building the application.
+
+Use Maven to build your application.Run the following command
+- mvn clean install
+
+Step 3- Create a Docker file and Build the image
+
+- docker build -t your-app-name:latest .
+your-app-name-> Image Name
+
+Step 4 : Shell Script file for deploying the docker container.
+
+Using Docker Run Command
+- docker run -p 8080:8080 your-app-name:latest
+-p 8080:8080 maps port 8080 from the container to the host. 
+
+Step 5 : Shell Script file for Cron job -> Implementing Scheduled task to check and send reminders every day.
