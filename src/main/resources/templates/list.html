@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Birthday Reminder</title>
+    <style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 2px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+h1 {text-align: center;
+color: darkmagenta;
+font-size: 2em;}
+
+</style>
+</head>
+<body style="background-image: url('/images/OIP.jpg');background-size: cover;background-repeat: no-repeat;">
+    <h1 style="	font-size: 2em; color: darkblue;"><u>Birthday Reminder List</u></h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 200px;background:mediumpurple">Name</th>
+                <th style="width: 200px;background:mediumpurple">Date of Birth</th>
+                 <th style="width: 200px;background:mediumpurple">Email</th>
+                <th style="width: 200px;background:mediumpurple">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+		
+            <tr th:each="birthday : ${birthdays}">
+                <td th:text="${birthday.name}" style="width: 200px;background:deeppink;"></td>
+                <td th:text="${#dates.format(birthday.date,'dd-MMM-YYYY')}" style="width: 200px;background:deeppink;"></td>
+                <td th:text="${birthday.email}" style="width: 200px;background:deeppink;"></td>
+                <td style="width: 200px;background:deeppink;"><a th:href="@{/birthdays/delete/{id}(id=${birthday.id})}" ><b>Delete</b></a>
+                 <a th:href="@{/birthdays/edit/{id}(id=${birthday.id})}"><b>Edit</b></a></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+   <div style="text-align: right">
+      <a th:href="@{/birthdays/add}" style="font-size:medium"><b>Add Birthday Reminder</b></a>
+      </div>
+</body>
+</html>

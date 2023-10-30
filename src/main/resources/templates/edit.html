@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Birthday</title>
+    	<style>
+	h1 {text-align: center;}
+form {text-align: center;}
+</style>
+</head>
+<body style="background-image: url('/images/bg.jpg');background-size: cover;background-repeat: no-repeat;">
+    <h1 style="	font-size: 2em; color: darkblue;"><u>Update Birthday Reminder</u></h1>
+    
+    <form th:object="${birthday}" th:action="@{/birthdays/update/{id}(id=${birthday.id})}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        
+        <label for="name"><b>Name:</b></label>
+        <input type="text" id="name" th:field="*{name}" required="required" style="width: 200px;">
+        <br>
+        <br>
+        
+        <label for="date"><b>Birthday Date:</b></label>
+        <input type="date" id="date" th:field="*{date}" required="required" style="width: 200px;">
+        <br>
+        <br>
+        <label for="email"><b>Email:</b></label>
+        <input type="email" id="email" th:field="*{email}" required="required" style="width: 200px;">
+        <br>
+        <br>
+	<div>
+			<button type="submit" style="background-color: lightpink"><b>Update Reminder</b></button>
+		</div>    </form>
+    <div style="text-align: right">
+		<a th:href="@{/birthdays}" style="font-size:medium; color: greenyellow"><b>Back to Birthday List</b></a>
+	</div>
+    
+</body>
+</html>
