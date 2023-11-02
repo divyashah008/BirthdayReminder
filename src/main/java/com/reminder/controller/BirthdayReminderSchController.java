@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BirthdayReminderSchController {
 
 	
-	@Scheduled
+	//@Scheduled
 	public void birthdayRemScheduler() {
 		
 		
