@@ -58,33 +58,31 @@ public class BirthdayController {
 		return "redirect:/birthdays/";
 	}
 
-	 @GetMapping("/birthdays/edit/{id}")
-	    public String editBirthdayForm(@PathVariable Long id, Model model) {
-	        Birthday birthday = birthdayService.getBirthdayById(id);
-	        model.addAttribute("birthday", birthday);
-	        return "edit";
-	    }
-	
-	 @PostMapping("/birthdays/update/{id}")
-	    public String updateBirthday(@PathVariable Long id, @ModelAttribute("birthday") Birthday updatedBirthday) {
-	        Birthday existingBirthday = birthdayService.getBirthdayById(id);
+	@GetMapping("/birthdays/edit/{id}")
+	public String editBirthdayForm(@PathVariable Long id, Model model) {
+		Birthday birthday = birthdayService.getBirthdayById(id);
+		model.addAttribute("birthday", birthday);
+		return "edit";
+	}
 
-	        if (existingBirthday == null) {
-	            // Handle the case where the birthday with the given ID doesn't exist.
-	            return "redirect:/birthdays";
-	        }
+	@PostMapping("/birthdays/update/{id}")
+	public String updateBirthday(@PathVariable Long id, @ModelAttribute("birthday") Birthday updatedBirthday) {
+		Birthday existingBirthday = birthdayService.getBirthdayById(id);
 
-	        // Update the existing birthday with the new data
-	        existingBirthday.setName(updatedBirthday.getName());
-	        existingBirthday.setDate(updatedBirthday.getDate());
-	        existingBirthday.setEmail(updatedBirthday.getEmail());
+		if (existingBirthday == null) {
+			// Handle the case where the birthday with the given ID doesn't exist.
+			return "redirect:/birthdays";
+		}
 
-	        // Save the updated birthday
-	        birthdayService.updateBirthday(existingBirthday);
+		// Update the existing birthday with the new data
+		existingBirthday.setName(updatedBirthday.getName());
+		existingBirthday.setDate(updatedBirthday.getDate());
+		existingBirthday.setEmail(updatedBirthday.getEmail());
 
-	        return "redirect:/birthdays";
-	    }
+		// Save the updated birthday
+		birthdayService.updateBirthday(existingBirthday);
 
-
+		return "redirect:/birthdays";
+	}
 
 }
