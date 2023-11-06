@@ -21,7 +21,7 @@ import com.reminder.service.BirthdayService;
 @RequestMapping("/birthdays")
 public class BirthdayReminderSchController {
 
-<<<<<<< HEAD
+
 	BirthdayService birthdayService;
 
 	public BirthdayReminderSchController(BirthdayService birthdayService) {
@@ -69,12 +69,6 @@ public class BirthdayReminderSchController {
 		birthdayService.updateBirthday(existingBirthday);
 
 		return ResponseEntity.ok(existingBirthday);
-=======
 	
-	//@Scheduled
-	public void birthdayRemScheduler() {
-		
-		
->>>>>>> fef4e626ea3823c598eec8aaed2ecd4576999f5c
-	}
+}
 }
