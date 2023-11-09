@@ -44,5 +44,4 @@ public class BirthdayServiceImpl implements BirthdayService {
 		return birthdayrepo.save(updatedBirthday);
 	}
 
-	
 }

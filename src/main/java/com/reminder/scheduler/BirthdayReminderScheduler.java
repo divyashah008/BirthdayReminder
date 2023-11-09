@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.reminder.emailService.EmailService;
@@ -19,7 +18,7 @@ public class BirthdayReminderScheduler {
 	@Autowired
 	private BirthdayRepository birthdayRepository;
 
-	@Scheduled(cron = "0 0 0 * * *") // Run daily at midnight
+     //	@Scheduled(cron = "0 0 0 * * *") // Run daily at midnight
 	// @Scheduled(cron = "* * * * * *") // Run per second
 	public void sendBirthdayReminders() {
 

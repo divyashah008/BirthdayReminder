@@ -3,6 +3,7 @@ package com.reminder.controller;
 import java.text.ParseException;
 import java.util.List;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,7 +55,7 @@ public class BirthdayController {
 	@GetMapping("/birthdays/delete/{id}")
 	public String deleteBirthday(@PathVariable Long id) {
 		birthdayService.deleteBirthday(id);
-		return "redirect:/birthdays/";
+		return "redirect:/birthdays";
 	}
 
 	@GetMapping("/birthdays/edit/{id}")

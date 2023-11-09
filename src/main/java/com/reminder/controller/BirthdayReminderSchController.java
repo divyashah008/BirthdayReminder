@@ -1,7 +1,9 @@
 package com.reminder.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -14,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.reminder.emailService.EmailService;
 import com.reminder.entity.Birthday;
+import com.reminder.repository.BirthdayRepository;
 import com.reminder.service.BirthdayService;
 
 @RestController
 @RequestMapping("/birthdays")
 public class BirthdayReminderSchController {
-
 
 	BirthdayService birthdayService;
 
@@ -28,6 +31,12 @@ public class BirthdayReminderSchController {
 		super();
 		this.birthdayService = birthdayService;
 	}
+
+	@Autowired
+	private BirthdayRepository birthdayrepo;
+
+	@Autowired
+	private EmailService emailService;
 
 	// Add Birthday Reminder
 	@PostMapping("/add")
@@ -67,8 +76,25 @@ public class BirthdayReminderSchController {
 
 		// Save the updated birthday
 		birthdayService.updateBirthday(existingBirthday);
-
 		return ResponseEntity.ok(existingBirthday);
-	
-}
+	}
+
+	@GetMapping("/send-reminders")
+	public String sendReminders() {
+		List<Birthday> upcomingBirthdays = birthdayrepo.findUpcomingBirthdays();
+		try {
+			for (Birthday birthday : upcomingBirthdays) {
+				String to = birthday.getEmail(); // Email recipient
+				String subject = "Birthday Reminder";
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+				String strDate = formatter.format(birthday.getDate());
+				String text = "Don't forget, " + birthday.getName() + "'s birthday is on " + strDate;
+				emailService.sendBirthdayReminderEmail(to, subject, text);
+			}
+			return "Reminders sent successfully.";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Failed to send reminders.";
+		}
+	}
 }

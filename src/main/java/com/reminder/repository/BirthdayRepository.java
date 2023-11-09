@@ -11,7 +11,7 @@ import com.reminder.entity.Birthday;
 @Repository
 public interface BirthdayRepository extends JpaRepository<Birthday, Long> {
 
-	@Query(value = "SELECT b.* FROM birthdays b WHERE MONTH(b.date) = MONTH(current_date()) AND DAY(b.date) = DAY(current_date() )", nativeQuery = true)
+	@Query(value = "SELECT b.* FROM birthdays b WHERE MONTH(b.date) = MONTH(current_date()) AND DAY(b.date) = DAY(current_date())", nativeQuery = true)
 	List<Birthday> findUpcomingBirthdays();
 
 }
