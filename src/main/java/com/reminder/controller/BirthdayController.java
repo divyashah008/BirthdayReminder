@@ -3,7 +3,6 @@ package com.reminder.controller;
 import java.text.ParseException;
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -67,21 +66,8 @@ public class BirthdayController {
 
 	@PostMapping("/birthdays/update/{id}")
 	public String updateBirthday(@PathVariable Long id, @ModelAttribute("birthday") Birthday updatedBirthday) {
-		Birthday existingBirthday = birthdayService.getBirthdayById(id);
-
-		if (existingBirthday == null) {
-			// Handle the case where the birthday with the given ID doesn't exist.
-			return "redirect:/birthdays";
-		}
-
-		// Update the existing birthday with the new data
-		existingBirthday.setName(updatedBirthday.getName());
-		existingBirthday.setDate(updatedBirthday.getDate());
-		existingBirthday.setEmail(updatedBirthday.getEmail());
-
 		// Save the updated birthday
-		birthdayService.updateBirthday(existingBirthday);
-
+		birthdayService.updateBirthday(id, updatedBirthday);
 		return "redirect:/birthdays";
 	}
 

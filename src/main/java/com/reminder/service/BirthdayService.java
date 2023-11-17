@@ -8,12 +8,12 @@ public interface BirthdayService {
 
 	List<Birthday> getAllBirthdays();
 
-	void saveBirthday(Birthday birth);
+	Birthday saveBirthday(Birthday birth);
 
-	void deleteBirthday(Long id);
+	boolean deleteBirthday(Long id);
 
 	Birthday getBirthdayById(Long id);
 
-	Birthday updateBirthday(Birthday birth);
+	Birthday updateBirthday(Long id, Birthday birth);
 
 }

@@ -2,8 +2,6 @@ package com.reminder.entity;
 
 import java.util.Date;
 
-
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;

@@ -18,7 +18,7 @@ public class BirthdayReminderScheduler {
 	@Autowired
 	private BirthdayRepository birthdayRepository;
 
-     //	@Scheduled(cron = "0 0 0 * * *") // Run daily at midnight
+	// @Scheduled(cron = "0 0 0 * * *") // Run daily at midnight
 	// @Scheduled(cron = "* * * * * *") // Run per second
 	public void sendBirthdayReminders() {
 

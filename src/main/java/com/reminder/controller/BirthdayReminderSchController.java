@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,21 +39,25 @@ public class BirthdayReminderSchController {
 
 	// Add Birthday Reminder
 	@PostMapping("/add")
-	public ResponseEntity<String> addBirthday(@RequestBody Birthday birthday) {
-		birthdayService.saveBirthday(birthday);
-		return ResponseEntity.status(HttpStatus.CREATED).body("added");
-
+	public ResponseEntity<Birthday> addBirthday(@RequestBody Birthday birthday) {
+		Birthday newBirthday = birthdayService.saveBirthday(birthday);
+		return ResponseEntity.status(HttpStatus.CREATED).body(newBirthday);
 	}
 
+	// Delete Birthday Reminder
 	@DeleteMapping("delete/{id}")
 	public ResponseEntity<Void> deleteBirthday(@PathVariable Long id) {
-		birthdayService.deleteBirthday(id);
-		return ResponseEntity.noContent().build();
+		boolean deleted = birthdayService.deleteBirthday(id);
+		if (deleted) {
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	// List of all Birthday Reminder
 	@GetMapping("/list")
-	public ResponseEntity<List<Birthday>> listBirthdays(Model model) {
+	public ResponseEntity<List<Birthday>> listBirthdays() {
 		List<Birthday> birthdays = birthdayService.getAllBirthdays();
 		return ResponseEntity.ok(birthdays);
 	}
@@ -62,25 +65,18 @@ public class BirthdayReminderSchController {
 	// UPDATE BIRTHDAY
 	@PutMapping("update/{id}")
 	public ResponseEntity<Birthday> updateBirthday(@PathVariable Long id, @RequestBody Birthday updatedBirthday) {
-		Birthday existingBirthday = birthdayService.getBirthdayById(id);
-
-		if (existingBirthday == null) {
-			// Handle the case where the birthday with the given ID doesn't exist.
+		// Save the updated birthday
+		Birthday birthday = birthdayService.updateBirthday(id, updatedBirthday);
+		if (birthday != null) {
+			return ResponseEntity.ok(birthday);
+		} else {
 			return ResponseEntity.notFound().build();
 		}
-
-		// Update the existing birthday with the new data
-		existingBirthday.setName(updatedBirthday.getName());
-		existingBirthday.setDate(updatedBirthday.getDate());
-		existingBirthday.setEmail(updatedBirthday.getEmail());
-
-		// Save the updated birthday
-		birthdayService.updateBirthday(existingBirthday);
-		return ResponseEntity.ok(existingBirthday);
 	}
 
+	// SEND REMINDER MAIL
 	@GetMapping("/send-reminders")
-	public String sendReminders() {
+	public ResponseEntity<String> sendReminders() {
 		List<Birthday> upcomingBirthdays = birthdayrepo.findUpcomingBirthdays();
 		try {
 			for (Birthday birthday : upcomingBirthdays) {
@@ -91,10 +87,11 @@ public class BirthdayReminderSchController {
 				String text = "Don't forget, " + birthday.getName() + "'s birthday is on " + strDate;
 				emailService.sendBirthdayReminderEmail(to, subject, text);
 			}
-			return "Reminders sent successfully.";
+			return ResponseEntity.ok("Birthday reminders sent.");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Failed to send reminders.";
+			// return ResponseEntity.notFound("Birthday reminders sent.");
+			return ResponseEntity.notFound().build();
 		}
 	}
 }
