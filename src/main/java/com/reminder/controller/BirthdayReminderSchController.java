@@ -3,7 +3,13 @@ package com.reminder.controller;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+<<<<<<< HEAD
+import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> 7bb25be4a820302945ec003995dd6fe9f92937fe
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,6 +43,10 @@ public class BirthdayReminderSchController {
 	@Autowired
 	private EmailService emailService;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7bb25be4a820302945ec003995dd6fe9f92937fe
 	// Add Birthday Reminder
 	@PostMapping("/add")
 	public ResponseEntity<Birthday> addBirthday(@RequestBody Birthday birthday) {
@@ -44,6 +54,10 @@ public class BirthdayReminderSchController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(newBirthday);
 	}
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7bb25be4a820302945ec003995dd6fe9f92937fe
 	// Delete Birthday Reminder
 	@DeleteMapping("delete/{id}")
 	public ResponseEntity<Void> deleteBirthday(@PathVariable Long id) {
@@ -62,7 +76,9 @@ public class BirthdayReminderSchController {
 		return ResponseEntity.ok(birthdays);
 	}
 
+	
 	// UPDATE BIRTHDAY
+	
 	@PutMapping("update/{id}")
 	public ResponseEntity<Birthday> updateBirthday(@PathVariable Long id, @RequestBody Birthday updatedBirthday) {
 		// Save the updated birthday
@@ -74,9 +90,15 @@ public class BirthdayReminderSchController {
 		}
 	}
 
+<<<<<<< HEAD
+        // Send Reminder
+        @GetMapping("/send-reminders")
+	public String sendReminders() {
+=======
 	// SEND REMINDER MAIL
 	@GetMapping("/send-reminders")
 	public ResponseEntity<String> sendReminders() {
+>>>>>>> 7bb25be4a820302945ec003995dd6fe9f92937fe
 		List<Birthday> upcomingBirthdays = birthdayrepo.findUpcomingBirthdays();
 		try {
 			for (Birthday birthday : upcomingBirthdays) {
@@ -87,6 +109,16 @@ public class BirthdayReminderSchController {
 				String text = "Don't forget, " + birthday.getName() + "'s birthday is on " + strDate;
 				emailService.sendBirthdayReminderEmail(to, subject, text);
 			}
+<<<<<<< HEAD
+			return "Reminders sent successfully.";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Failed to send reminders.";
+		}
+	}
+
+
+=======
 			return ResponseEntity.ok("Birthday reminders sent.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,4 +126,5 @@ public class BirthdayReminderSchController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+>>>>>>> 7bb25be4a820302945ec003995dd6fe9f92937fe
 }

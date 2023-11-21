@@ -18,8 +18,13 @@ public class BirthdayReminderScheduler {
 	@Autowired
 	private BirthdayRepository birthdayRepository;
 
+<<<<<<< HEAD
+	//@Scheduled(cron = "0 0 0 * * *") // Run daily at midnight
+	//@Scheduled(cron = "* * * * * *") // Run per second
+=======
 	// @Scheduled(cron = "0 0 0 * * *") // Run daily at midnight
 	// @Scheduled(cron = "* * * * * *") // Run per second
+>>>>>>> 7bb25be4a820302945ec003995dd6fe9f92937fe
 	public void sendBirthdayReminders() {
 
 		List<Birthday> upcomingBirthdays = birthdayRepository.findUpcomingBirthdays();

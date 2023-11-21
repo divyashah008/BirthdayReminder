@@ -1,0 +1,3 @@
+# file name - hello.cronjob
+
+* * * * *  /email/sendEmail.sh >> /var/log/emailcron.log 2>&1
